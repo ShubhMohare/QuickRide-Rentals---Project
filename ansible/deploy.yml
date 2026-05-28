@@ -10,7 +10,7 @@
       shell: docker rm mycontainer || true
 
     - name: Build Docker image
-      shell: docker build -t mywebsite .
+      shell: docker build -t mywebsite /var/lib/jenkins/workspace/QuickRide-Pipeline
 
     - name: Run Docker container
       shell: docker run -d --name mycontainer -p 80:80 mywebsite

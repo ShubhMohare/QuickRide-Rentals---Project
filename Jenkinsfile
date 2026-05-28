@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git https://github.com/ShubhMohare/QuickRide-Rentals---Project.git'
+                git 'YOUR_GITHUB_REPO_URL'
             }
         }
 
@@ -14,5 +14,6 @@ pipeline {
                 sh 'ansible-playbook ansible/deploy.yml -i ansible/inventory'
             }
         }
+
     }
 }

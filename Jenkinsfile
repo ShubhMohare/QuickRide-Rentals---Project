@@ -1,31 +1,16 @@
-pipeline {
-    agent any
+stage('SonarQube Scan') {
+    steps {
+        script {
+            def scannerHome = tool 'sonar-scanner'
 
-    stages {
-
-        stage('Clone Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/ShubhMohare/QuickRide-Rentals---Project.git'
-            }
-        }
-
-        stage('SonarQube Scan') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh '''
-                    sonar-scanner \
-                    -Dsonar.projectKey=QuickRide \
-                    -Dsonar.sources=. \
-                    -Dsonar.host.url=http://SONAR-IP:9000 \
-                    -Dsonar.login=YOUR_TOKEN
-                    '''
-                }
-            }
-        }
-
-        stage('Run Ansible') {
-            steps {
-                sh 'ansible-playbook ansible/deploy.yml -i ansible/inventory'
+            withSonarQubeEnv('sonarqube') {
+                sh """
+                ${scannerHome}/bin/sonar-scanner \
+                -Dsonar.projectKey=QuickRide \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=http://YOUR-SONAR-IP:9000 \
+                -Dsonar.login=YOUR_TOKEN
+                """
             }
         }
     }

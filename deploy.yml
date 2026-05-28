@@ -1,0 +1,16 @@
+- hosts: localhost
+  become: yes
+
+  tasks:
+
+    - name: Stop old container
+      shell: docker stop mycontainer || true
+
+    - name: Remove old container
+      shell: docker rm mycontainer || true
+
+    - name: Build Docker image
+      shell: docker build -t mywebsite .
+
+    - name: Run Docker container
+      shell: docker run -d --name mycontainer -p 80:80 mywebsite
